@@ -164,56 +164,7 @@
   },
   "components": {
     "schemas": {
-      "School": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "whichschoolcs": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/whichschoolcs"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "Student": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "whichschoolcs": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/whichschoolcs"
-            },
-            "nullable": true
-          },
-          "whichsubject": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/whichsubject"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Subject": {
         "type": "object",
         "properties": {
           "id": {
@@ -228,11 +179,8 @@
             "type": "integer",
             "format": "int32"
           },
-          "whichsubject": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/whichsubject"
-            },
+          "subject": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -257,46 +205,6 @@
           "summary": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "whichschoolcs": {
-        "type": "object",
-        "properties": {
-          "shoolID": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "studentID": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "student": {
-            "$ref": "#/components/schemas/Student"
-          },
-          "school": {
-            "$ref": "#/components/schemas/School"
-          }
-        },
-        "additionalProperties": false
-      },
-      "whichsubject": {
-        "type": "object",
-        "properties": {
-          "subjectID": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "studentID": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "student": {
-            "$ref": "#/components/schemas/Student"
-          },
-          "subject": {
-            "$ref": "#/components/schemas/Subject"
           }
         },
         "additionalProperties": false

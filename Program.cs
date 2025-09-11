@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using System;
 using WebApplication1;
 using WebApplication1.dbcontext;
+using WebApplication1.models;
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -20,11 +22,48 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapGet("/students", async (Appdbcontext db) =>
+    await db.students.ToListAsync());
+
+app.MapGet("/students/{id}", async (int id, Appdbcontext db) =>
+    await db.students.FindAsync(id) is Student student
+        ? Results.Ok(student)
+        : Results.NotFound());
+
+app.MapPost("/students", async (Student student, Appdbcontext db) =>
+{
+    db.students.Add(student);
+    await db.SaveChangesAsync();
+    return Results.Created($"/students/{student.id}", student);
+});
+
+app.MapPut("/students/{id}", async (int id, Student updatedStudent, Appdbcontext db) =>
+{
+    var student = await db.students.FindAsync(id);
+    if (student is null) return Results.NotFound();
+
+    student.name = updatedStudent.name;
+    student.grade = updatedStudent.grade;
+    student.subject = updatedStudent.subject;
+
+    await db.SaveChangesAsync();
+    return Results.Ok(student);
+});
+
+app.MapDelete("/students/{id}", async (int id, Appdbcontext db) =>
+{
+    var student = await db.students.FindAsync(id);
+    if (student is null) return Results.NotFound();
+
+    db.students.Remove(student);
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+});
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapStudentEndpoints();
 
 app.Run();
